@@ -12,9 +12,9 @@ A simple and elegant solution to displaying hierarchical tree structures (i.e. a
 
 ## Dependencies
 
-Where provided these are the actual versions patternfly-bootstrap-treeview has been tested against.  
+Where provided these are the actual versions patternfly-bootstrap-treeview has been tested against.
 
-- [Bootstrap v3.3.4 (>= 3.0.0)](http://getbootstrap.com/)
+- [Bootstrap v3.3.4 (>= 3.0.0)](http://getbootstrap.com/) (doesn't support Bootstrap 4)
 - [jQuery v2.1.3 (>= 1.9.0)](http://jquery.com/)
 
 
@@ -130,6 +130,7 @@ If you want to do more, here's the full node specification
   color: "#000000",
   backColor: "#FFFFFF",
   iconColor: "#FFFFFF",
+  iconBackground: "#000000",
   selectable: true,
   checkable: true,
   state: {
@@ -202,6 +203,11 @@ The background color used on a given node, overrides global color option.
 `String` `Optional`
 
 The color used on a given node's icon.
+
+#### iconBackground
+`String` `Optional`
+
+The color used under a given node's background icon.
 
 #### lazyLoad
 `Boolean` `Default: false`

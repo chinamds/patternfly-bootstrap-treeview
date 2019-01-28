@@ -1,7 +1,7 @@
 {
   "name": "patternfly-bootstrap-treeview",
   "description": "Tree View for Twitter Bootstrap",
-  "version": "2.1.5",
+  "version": "2.1.8",
   "homepage": "https://github.com/patternfly/patternfly-bootstrap-treeview",
   "author": {
     "name": "Red Hat"
@@ -23,7 +23,7 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
-    "bootstrap": "3.3.x",
+    "bootstrap": "3.4.x",
     "jquery": ">= 2.1.x"
   },
   "devDependencies": {

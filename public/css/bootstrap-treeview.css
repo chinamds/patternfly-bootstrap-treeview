@@ -26,18 +26,19 @@
 	margin-right: 10px;
 }
 
+
 .treeview span.icon {
-	width: 12px;
-	margin-right: 5px;
+  width: 12px;
+  margin-right: 5px;
 }
 
 .treeview .node-disabled {
-	color: silver;
-	cursor: not-allowed;
+  color: silver;
+  cursor: not-allowed;
 }
 
 .treeview .node-hidden {
-	display: none;
+  display: none;
 }
 
 .treeview span.image {
@@ -48,5 +49,12 @@
   background-size: contain;
   background-repeat: no-repeat;
   margin-right: 5px;
+  line-height: 1em;
+}
+
+.treeview span.icon.node-icon-background {
+  padding: 2px 2px 2px 2px;
+  width: calc(1em + 4px);
+  height: calc(1em + 4px);
   line-height: 1em;
 }
