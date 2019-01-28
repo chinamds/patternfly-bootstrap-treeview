@@ -1,5 +1,5 @@
 /* =========================================================
- * patternfly-bootstrap-treeview.js v2.1.0
+ * patternfly-bootstrap-treeview.js v2.2.0
  * =========================================================
  * Copyright 2013 Jonathan Miles
  * Project URL : http://www.jondmiles.com/bootstrap-treeview
@@ -668,7 +668,7 @@
 				node.$el.addClass('node-selected');
 
 				if (node.selectedIcon || this._options.selectedIcon) {
-					node.$el.children('span.node-icon')
+					node.$el.find('span.node-icon')
 						.removeClass(node.icon || this._options.nodeIcon)
 						.addClass(node.selectedIcon || this._options.selectedIcon);
 				}
