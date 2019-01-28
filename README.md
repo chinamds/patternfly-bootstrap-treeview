@@ -14,8 +14,8 @@ A simple and elegant solution to displaying hierarchical tree structures (i.e. a
 
 Where provided these are the actual versions patternfly-bootstrap-treeview has been tested against.
 
-- [Bootstrap v3.3.4 (>= 3.0.0)](http://getbootstrap.com/) (doesn't support Bootstrap 4)
-- [jQuery v2.1.3 (>= 1.9.0)](http://jquery.com/)
+- [Bootstrap v4.1.3 (>= 4.0.0)](http://getbootstrap.com/)
+- [jQuery v3.2.0 (>= 1.9.0)](http://jquery.com/)
 
 
 ## Getting Started

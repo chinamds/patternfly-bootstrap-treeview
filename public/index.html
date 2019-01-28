@@ -3,6 +3,7 @@
   <head>
     <title>Bootstrap Tree View</title>
     <link href="./libs/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="./libs/font-awesome/css/all.css" rel="stylesheet">
     <link href="./css/bootstrap-treeview.css" rel="stylesheet">
   </head>
   <body>
@@ -476,9 +477,9 @@
 
         $('#treeview6').treeview({
           color: "#428bca",
-          expandIcon: "glyphicon glyphicon-stop",
-          collapseIcon: "glyphicon glyphicon-unchecked",
-          nodeIcon: "glyphicon glyphicon-user",
+          expandIcon: "fas fa-stop",
+          collapseIcon: "far fa-square",
+          nodeIcon: "far fa-user",
           showTags: true,
           data: defaultData
         });
@@ -490,9 +491,9 @@
         });
 
         $('#treeview8').treeview({
-          expandIcon: "glyphicon glyphicon-stop",
-          collapseIcon: "glyphicon glyphicon-unchecked",
-          nodeIcon: "glyphicon glyphicon-user",
+          expandIcon: "fas fa-stop",
+          collapseIcon: "far fa-square",
+          nodeIcon: "far fa-user",
           color: "yellow",
           backColor: "purple",
           onhoverColor: "orange",
@@ -506,9 +507,9 @@
         });
 
         $('#treeview9').treeview({
-          expandIcon: "glyphicon glyphicon-stop",
-          collapseIcon: "glyphicon glyphicon-unchecked",
-          nodeIcon: "glyphicon glyphicon-user",
+          expandIcon: "fas fa-stop",
+          collapseIcon: "far fa-square",
+          nodeIcon: "far fa-user",
           color: "yellow",
           backColor: "purple",
           onhoverColor: "orange",
@@ -553,6 +554,7 @@
         });
 
 
+        var selectableNodes;
         var initSelectableTree = function() {
           return $('#treeview-selectable').treeview({
             data: defaultData,
@@ -562,6 +564,9 @@
             },
             onNodeUnselected: function (event, node) {
               $('#selectable-output').prepend('<p>' + node.text + ' was unselected</p>');
+            },
+            onInitialized: function(){
+              selectableNodes = findSelectableNodes();
             }
           });
         };
@@ -570,7 +575,8 @@
         var findSelectableNodes = function() {
           return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: false, exactMatch: false } ]);
         };
-        var selectableNodes = findSelectableNodes();
+        
+        //var selectableNodes = findSelectableNodes();
 
         $('#chk-select-multi:checkbox').on('change', function () {
           console.log('multi-select change');
@@ -597,7 +603,7 @@
         });
 
 
-
+        var expandibleNodes;
         var $expandibleTree = $('#treeview-expandible').treeview({
           data: defaultData,
           onNodeCollapsed: function(event, node) {
@@ -605,13 +611,16 @@
           },
           onNodeExpanded: function (event, node) {
             $('#expandible-output').prepend('<p>' + node.text + ' was expanded</p>');
+          },
+          onInitialized: function(){
+            expandibleNodes = findExpandibleNodess();
           }
         });
 
         var findExpandibleNodess = function() {
           return $expandibleTree.treeview('search', [ $('#input-expand-node').val(), { ignoreCase: false, exactMatch: false } ]);
         };
-        var expandibleNodes = findExpandibleNodess();
+        //var expandibleNodes = findExpandibleNodess();
 
         // Expand/collapse/toggle nodes
         $('#input-expand-node').on('keyup', function (e) {
@@ -643,7 +652,7 @@
         });
 
 
-
+        var checkableNodes;
         var $checkableTree = $('#treeview-checkable').treeview({
           data: defaultData,
           showIcon: false,
@@ -653,13 +662,16 @@
           },
           onNodeUnchecked: function (event, node) {
             $('#checkable-output').prepend('<p>' + node.text + ' was unchecked</p>');
+          },
+          onInitialized: function(){
+            checkableNodes = findCheckableNodess();
           }
         });
 
         var findCheckableNodess = function() {
           return $checkableTree.treeview('search', [ $('#input-check-node').val(), { ignoreCase: false, exactMatch: false } ]);
         };
-        var checkableNodes = findCheckableNodess();
+        //var checkableNodes = findCheckableNodess();
 
         // Check/uncheck/toggle nodes
         $('#input-check-node').on('keyup', function (e) {
@@ -689,7 +701,7 @@
         });
 
 
-
+        var disabledNodes;
         var $disabledTree = $('#treeview-disabled').treeview({
           data: defaultData,
           onNodeDisabled: function(event, node) {
@@ -706,13 +718,16 @@
           },
           onNodeUnselected: function (event, node) {
             $('#disabled-output').prepend('<p>' + node.text + ' was unselected</p>');
+          },
+          onInitialized: function(){
+           disabledNodes = findDisabledNodes();
           }
         });
 
         var findDisabledNodes = function() {
           return $disabledTree.treeview('search', [ $('#input-disable-node').val(), { ignoreCase: false, exactMatch: false } ]);
         };
-        var disabledNodes = findDisabledNodes();
+        //var disabledNodes = findDisabledNodes();
 
         // Expand/collapse/toggle nodes
         $('#input-disable-node').on('keyup', function (e) {

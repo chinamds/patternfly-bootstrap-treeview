@@ -33,16 +33,16 @@
 
 		levels: 2,
 
-		expandIcon: 'glyphicon glyphicon-plus',
-		collapseIcon: 'glyphicon glyphicon-minus',
-		loadingIcon: 'glyphicon glyphicon-hourglass',
-		emptyIcon: 'glyphicon',
+		expandIcon: 'fa fa-plus',
+		collapseIcon: 'fa fa-minus',
+		loadingIcon: 'fa fa-hourglass',
+		emptyIcon: 'fa',
 		nodeIcon: '',
 		selectedIcon: '',
-		checkedIcon: 'glyphicon glyphicon-check',
-		partiallyCheckedIcon: 'glyphicon glyphicon-expand',
-		uncheckedIcon: 'glyphicon glyphicon-unchecked',
-		tagsClass: 'badge',
+		checkedIcon: 'far fa-check-square',
+		partiallyCheckedIcon: 'fa fa-expand',
+		uncheckedIcon: 'far fa-square',
+		tagsClass:'badge badge-primary badge-pill',
 
 		color: undefined,
 		backColor: undefined,
@@ -540,7 +540,7 @@
 
 	Tree.prototype._lazyLoad = function (node) {
 		// Show a different icon while loading the child nodes
-		node.$el.children('span.expand-icon')
+		node.$el.find('span.expand-icon')
 			.removeClass(this._options.expandIcon)
 			.addClass(this._options.loadingIcon);
 
@@ -566,7 +566,7 @@
 
 			// Set element
 			if (node.$el) {
-				node.$el.children('span.expand-icon')
+				node.$el.find('span.expand-icon')
 					.removeClass(this._options.expandIcon)
 					.removeClass(this._options.loadingIcon)
 					.addClass(this._options.collapseIcon);
@@ -589,7 +589,7 @@
 
 			// Set element
 			if (node.$el) {
-				node.$el.children('span.expand-icon')
+				node.$el.find('span.expand-icon')
 					.removeClass(this._options.collapseIcon)
 					.addClass(this._options.expandIcon);
 			}
@@ -619,6 +619,9 @@
 			// Set element
 			if (node.$el) {
 				node.$el.removeClass('node-hidden');
+				if (node.$el.hasClass('d-none')){
+					node.$el.removeClass('d-none').addClass('d-flex');
+				}
 			}
 		}
 		else {
@@ -629,6 +632,9 @@
 			// Set element
 			if (node.$el) {
 				node.$el.addClass('node-hidden');
+				if (node.$el.hasClass('d-flex')){
+					node.$el.removeClass('d-flex').addClass('d-none');
+				}
 			}
 		}
 	};
@@ -662,7 +668,7 @@
 				node.$el.addClass('node-selected');
 
 				if (node.selectedIcon || this._options.selectedIcon) {
-					node.$el.children('span.node-icon')
+					node.$el.find('span.node-icon')
 						.removeClass(node.icon || this._options.nodeIcon)
 						.addClass(node.selectedIcon || this._options.selectedIcon);
 				}
@@ -694,7 +700,7 @@
 				node.$el.removeClass('node-selected');
 
 				if (node.selectedIcon || this._options.selectedIcon) {
-					node.$el.children('span.node-icon')
+					node.$el.find('span.node-icon')
 						.removeClass(node.selectedIcon || this._options.selectedIcon)
 						.addClass(node.icon || this._options.nodeIcon);
 				}
@@ -783,7 +789,7 @@
 			// Set element
 			if (node.$el) {
 				node.$el.addClass('node-checked').removeClass('node-checked-partial');
-				node.$el.children('span.check-icon')
+				node.$el.find('span.check-icon')
 					.removeClass(this._options.uncheckedIcon)
 					.removeClass(this._options.partiallyCheckedIcon)
 					.addClass(this._options.checkedIcon);
@@ -800,7 +806,7 @@
 			// Set element
 			if (node.$el) {
 				node.$el.addClass('node-checked-partial').removeClass('node-checked');
-				node.$el.children('span.check-icon')
+				node.$el.find('span.check-icon')
 					.removeClass(this._options.uncheckedIcon)
 					.removeClass(this._options.checkedIcon)
 					.addClass(this._options.partiallyCheckedIcon);
@@ -816,7 +822,7 @@
 			// Set element
 			if (node.$el) {
 				node.$el.removeClass('node-checked node-checked-partial');
-				node.$el.children('span.check-icon')
+				node.$el.find('span.check-icon')
 					.removeClass(this._options.checkedIcon)
 					.removeClass(this._options.partiallyCheckedIcon)
 					.addClass(this._options.uncheckedIcon);
@@ -925,6 +931,12 @@
 
 		// Append .classes to the node
 		node.$el.addClass(node.class);
+		var $flexbox = node.$el;
+		if (this._options.showTags && node.tags) {
+			$flexbox = this._template.flex.clone();
+			node.$el.append($flexbox);
+			node.$el.addClass('d-flex justify-content-between align-items-center');
+		}
 
 		// Set the #id of the node if specified
 		if (node.id) {
@@ -948,33 +960,33 @@
 
 		// Add indent/spacer to mimic tree structure
 		for (var i = 0; i < (node.level - 1); i++) {
-			node.$el.append(this._template.indent.clone());
+			$flexbox.append(this._template.indent.clone());
 		}
 
 		// Add expand / collapse or empty spacer icons
-		node.$el
+		$flexbox
 			.append(
 				node.nodes || node.lazyLoad ? this._template.icon.expand.clone() : this._template.icon.empty.clone()
 			);
 
 		// Add checkbox and node icons
 		if (this._options.checkboxFirst) {
-			this._addCheckbox(node);
-			this._addIcon(node);
-			this._addImage(node);
+			this._addCheckbox(node, $flexbox);
+			this._addIcon(node, $flexbox);
+			this._addImage(node, $flexbox);
 		} else {
-			this._addIcon(node);
-			this._addImage(node);
-			this._addCheckbox(node);
+			this._addIcon(node, $flexbox);
+			this._addImage(node, $flexbox);
+			this._addCheckbox(node, $flexbox);
 		}
 
 		// Add text
 		if (this._options.wrapNodeText) {
 			var wrapper = this._template.text.clone();
-			node.$el.append(wrapper);
+			$flexbox.append(wrapper);
 			wrapper.append(node.text);
 		} else {
-			node.$el.append(node.text);
+			$flexbox.append(node.text);
 		}
 
 		// Add tags as badges
@@ -1008,15 +1020,15 @@
 	};
 
 	// Add checkable icon
-	Tree.prototype._addCheckbox = function (node) {
+	Tree.prototype._addCheckbox = function (node, $flex) {
 		if (this._options.showCheckbox && (node.hideCheckbox === undefined || node.hideCheckbox === false)) {
-			node.$el
+			(!$flex ? node.$el : $flex)
 				.append(this._template.icon.check.clone());
 		}
 	}
 
 	// Add node icon
-	Tree.prototype._addIcon = function (node) {
+	Tree.prototype._addIcon = function (node, $flex) {
 		if (this._options.showIcon && !(this._options.showImage && node.image)) {
 			var icon = this._template.icon.node.clone().addClass(node.icon || this._options.nodeIcon);
 			if (node.iconColor) {
@@ -1027,13 +1039,13 @@
 				icon.css('background', node.iconBackground);
 			}
 
-			node.$el.append(icon);
+			(!$flex ? node.$el : $flex).append(icon);
 		}
 	}
 
-	Tree.prototype._addImage = function (node) {
+	Tree.prototype._addImage = function (node, $flex) {
  		if (this._options.showImage && node.image) {
- 			node.$el
+			(!$flex ? node.$el : $flex)
  				.append(this._template.image.clone()
  					.addClass('node-image')
  					.css('background-image', "url('" + node.image + "')")
@@ -1171,6 +1183,7 @@
 	Tree.prototype._template = {
 		tree: $('<ul class="list-group"></ul>'),
 		node: $('<li class="list-group-item"></li>'),
+		flex: $('<div class="mb-1"></div>'),
 		indent: $('<span class="indent"></span>'),
 		icon: {
 			node: $('<span class="icon node-icon"></span>'),
